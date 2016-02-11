@@ -31,7 +31,7 @@ public class TimeQuery implements Runnable {
 			out.println("query time");
 			//System.out.println("send order to server success.");
 			String resp = in.readLine();
-			System.out.println("The Time is :"+resp);
+			System.out.println("aaa The Time is :"+resp);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
