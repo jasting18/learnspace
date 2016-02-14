@@ -44,23 +44,22 @@ public class MutiplexerTimeServer implements Runnable {
 				while(it.hasNext()){
 					key = it.next();
 					it.remove();
-					//TODO:handleInput
+					handleInput(key);
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
-			if (selector!=null){
-				try {
-					selector.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+		}
+		if (selector!=null){
+			try {
+				selector.close();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
 	}
 	
-	public void handleInput(SelectionKey key) throws Exception{
+	public void handleInput(SelectionKey key) throws IOException{
 		if (key.isValid()){
 			if (key.isAcceptable()){
 				//Accept the new connection
@@ -73,7 +72,15 @@ public class MutiplexerTimeServer implements Runnable {
 				//Read the data
 				SocketChannel sc = (SocketChannel)key.channel();
 				ByteBuffer readBuffer = ByteBuffer.allocate(1024);
-				int readBytes = sc.read(readBuffer);
+				
+				int readBytes = 0;
+				try {
+					readBytes = sc.read(readBuffer);
+				} catch (Exception e) {
+					e.printStackTrace();
+					key.cancel();
+					sc.close();
+				}
 				if (readBytes>0){
 					readBuffer.flip();
 					byte[] bytes = new byte[readBuffer.remaining()];

@@ -18,6 +18,8 @@ public class TimeClientHandle implements Runnable {
 	
 	public TimeClientHandle(String host,int port) {
 		try {
+			this.host = host;
+			this.port = port;
 			this.selector = Selector.open();
 			this.socketChannel = SocketChannel.open();
 			this.socketChannel.configureBlocking(false);
@@ -48,6 +50,7 @@ public class TimeClientHandle implements Runnable {
 					try{
 						handleInput(key);
 					}catch(Exception e){
+						e.printStackTrace();
 						if (key.channel()!=null){
 							key.channel().close();
 						}
@@ -114,10 +117,10 @@ public class TimeClientHandle implements Runnable {
 	private void doWrite(SocketChannel sc) throws IOException{
 		byte[] req = "query time".getBytes();
 		ByteBuffer writeBuffer = ByteBuffer.allocate(req.length);
-		writeBuffer.put(writeBuffer);
+		writeBuffer.put(req);
 		writeBuffer.flip();
 		sc.write(writeBuffer);
-		if (writeBuffer.hasRemaining()){
+		if (!writeBuffer.hasRemaining()){
 			System.out.println("Send order to server success");
 		}
 	}
