@@ -39,7 +39,8 @@ public class TimeClientHandle implements Runnable {
 		
 		while(!stop){
 			try {
-				selector.select(1000);
+				int selectNum = selector.select(1000);
+				System.out.println("selected number is :"+selectNum);
 				Set<SelectionKey> selectedKeys = selector.selectedKeys();
 				Iterator<SelectionKey> it = selectedKeys.iterator();
 				SelectionKey key = null;
@@ -92,6 +93,8 @@ public class TimeClientHandle implements Runnable {
 					readBuffer.get(bytes);
 					String body = new String(bytes,"UTF8");
 					System.out.println("Now is :"+body);
+					key.cancel();
+					channel.close();
 				}else if (readBytes<0){
 					//对端链路已关闭
 					key.cancel();
