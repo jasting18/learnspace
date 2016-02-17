@@ -114,6 +114,7 @@ public class TimeClientHandle implements Runnable {
 			doWrite(socketChannel);
 		}else{
 			socketChannel.register(selector, SelectionKey.OP_CONNECT);
+			socketChannel.register(selector, SelectionKey.OP_READ);
 		}
 	}
 	

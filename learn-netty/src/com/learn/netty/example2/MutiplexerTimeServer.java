@@ -38,7 +38,7 @@ public class MutiplexerTimeServer implements Runnable {
 		while(!stop){
 			try {
 				int selectNum = selector.select(1000);
-				System.out.println("selected number is :"+selectNum);
+				//System.out.println("selected number is :"+selectNum);
 				Set<SelectionKey> keys = selector.selectedKeys();
 				Iterator<SelectionKey> it = keys.iterator();
 				SelectionKey key = null;
