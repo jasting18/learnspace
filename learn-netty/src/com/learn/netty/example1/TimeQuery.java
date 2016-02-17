@@ -29,9 +29,9 @@ public class TimeQuery implements Runnable {
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			out = new PrintWriter(socket.getOutputStream(),true);
 			out.println("query time");
-			System.out.println("send order to server success.");
+			//System.out.println("send order to server success.");
 			String resp = in.readLine();
-			System.out.println("Time is :"+resp);
+			System.out.println("cccee The Time is :"+resp);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
