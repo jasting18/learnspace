@@ -92,6 +92,7 @@ public class MutiplexerTimeServer implements Runnable {
 					doWrite(sc,currentTime);
 				}else if (readBytes<0){
 					//对端路由关闭
+					System.out.println("发送数据结束！");
 					key.cancel();
 					sc.close();
 				}else{
