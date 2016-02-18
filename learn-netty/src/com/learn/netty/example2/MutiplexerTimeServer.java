@@ -91,11 +91,11 @@ public class MutiplexerTimeServer implements Runnable {
 					String currentTime = "query time".equals(body)?new Date(System.currentTimeMillis()).toString():"bad order";
 					doWrite(sc,currentTime);
 				}else if (readBytes<0){
-					//¶Ô¶ËÁ´Â·¹Ø±Õ
+					//å¯¹ç«¯è·¯ç”±å…³é—­
 					key.cancel();
 					sc.close();
 				}else{
-					//¶Áµ½0×Ö½Ú£¬ºöÂÔ
+					//æ”¶åˆ°0å­—èŠ‚ï¼Œå¿½ç•¥
 				}
 			}
 		}

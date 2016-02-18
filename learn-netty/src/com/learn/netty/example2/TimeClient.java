@@ -13,7 +13,7 @@ public class TimeClient {
 //		}
 //		semaphore.countDown();
 		
-		TimeClientHandle clientHandle = new TimeClientHandle("localhost",8080);
+		TimeClientHandle clientHandle = new TimeClientHandle("10.128.221.42",8080);
 		new Thread(clientHandle).start();
 	}
 }
