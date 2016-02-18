@@ -62,7 +62,7 @@ public class TimeClientHandle implements Runnable {
 			}
 		}
 		
-		//关闭多路复用器，所有注册的channel和Pipe等资源都会一并关闭，所以不需要重复释放资源
+		
 		if (selector!=null){
 			try {
 				selector.close();
@@ -74,14 +74,14 @@ public class TimeClientHandle implements Runnable {
 	
 	private void handleInput(SelectionKey key) throws IOException{
 		if (key.isValid()){
-			//判断是否连接成功
+			
 			SocketChannel channel = (SocketChannel)key.channel();
 			if (key.isConnectable()){
 				if (channel.finishConnect()){
 					channel.register(selector, SelectionKey.OP_READ);
 					doWrite(channel);
 				}else{
-					System.exit(1);//连接失败，进程退出
+					System.exit(1);
 				}
 			}
 			if (key.isReadable()){
@@ -96,11 +96,11 @@ public class TimeClientHandle implements Runnable {
 					key.cancel();
 					channel.close();
 				}else if (readBytes<0){
-					//对端链路已关闭
+					
 					key.cancel();
 					channel.close();
 				}else{
-					//读到0字节，忽略
+					
 				}
 			}
 			
@@ -108,7 +108,7 @@ public class TimeClientHandle implements Runnable {
 	}
 	
 	private void doConnect() throws IOException{
-		//如果连接成功，那么注册到多路复用器上，发送请求消息，读应答
+		
 		if (socketChannel.connect(new InetSocketAddress(host,port))){
 			socketChannel.register(selector, SelectionKey.OP_READ);
 			doWrite(socketChannel);
