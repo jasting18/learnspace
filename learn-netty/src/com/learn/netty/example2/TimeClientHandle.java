@@ -39,7 +39,7 @@ public class TimeClientHandle implements Runnable {
 		
 		while(!stop){
 			try {
-				int selectNum = selector.select(1000);
+				int selectNum = selector.select();
 				System.out.println("selected number is :"+selectNum);
 				Set<SelectionKey> selectedKeys = selector.selectedKeys();
 				Iterator<SelectionKey> it = selectedKeys.iterator();
@@ -93,8 +93,8 @@ public class TimeClientHandle implements Runnable {
 					readBuffer.get(bytes);
 					String body = new String(bytes,"UTF8");
 					System.out.println("Now is :"+body);
-					key.cancel();
-					channel.close();
+					//key.cancel();
+					//channel.close();
 				}else if (readBytes<0){
 					
 					key.cancel();
@@ -113,8 +113,9 @@ public class TimeClientHandle implements Runnable {
 			socketChannel.register(selector, SelectionKey.OP_READ);
 			doWrite(socketChannel);
 		}else{
-			socketChannel.register(selector, SelectionKey.OP_CONNECT);
 			socketChannel.register(selector, SelectionKey.OP_READ);
+			socketChannel.register(selector, SelectionKey.OP_CONNECT|SelectionKey.OP_READ);
+			socketChannel.register(selector, SelectionKey.OP_CONNECT);
 		}
 	}
 	
