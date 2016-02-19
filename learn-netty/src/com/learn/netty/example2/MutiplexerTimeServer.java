@@ -37,7 +37,7 @@ public class MutiplexerTimeServer implements Runnable {
 	public void run() {
 		while(!stop){
 			try {
-				int selectNum = selector.select(1000);
+				int selectNum = selector.select();
 				//System.out.println("selected number is :"+selectNum);
 				Set<SelectionKey> keys = selector.selectedKeys();
 				Iterator<SelectionKey> it = keys.iterator();
@@ -90,6 +90,10 @@ public class MutiplexerTimeServer implements Runnable {
 					System.out.println("The time server receive order:"+body);
 					String currentTime = "query time".equals(body)?new Date(System.currentTimeMillis()).toString():"bad order";
 					doWrite(sc,currentTime);
+					//在服务器端关闭channel
+					//key.cancel();
+					//sc.close();
+					//new Thread(new ServerHeartBeat(sc)).start();
 				}else if (readBytes<0){
 					//对端路由关闭
 					System.out.println("发送数据结束！");
