@@ -46,7 +46,7 @@ public class TimeClientHandle implements Runnable {
 				SelectionKey key = null;
 				while(it.hasNext()){
 					key = it.next();
-					it.remove();
+					//it.remove();
 					
 					try{
 						handleInput(key);
@@ -78,7 +78,7 @@ public class TimeClientHandle implements Runnable {
 			SocketChannel channel = (SocketChannel)key.channel();
 			if (key.isConnectable()){
 				if (channel.finishConnect()){
-					channel.register(selector, SelectionKey.OP_READ);
+					channel.register(selector, SelectionKey.OP_READ|SelectionKey.OP_CONNECT);
 					doWrite(channel);
 				}else{
 					System.exit(1);
@@ -113,8 +113,8 @@ public class TimeClientHandle implements Runnable {
 			socketChannel.register(selector, SelectionKey.OP_READ);
 			doWrite(socketChannel);
 		}else{
-			socketChannel.register(selector, SelectionKey.OP_READ);
-			socketChannel.register(selector, SelectionKey.OP_CONNECT|SelectionKey.OP_READ);
+			//socketChannel.register(selector, SelectionKey.OP_READ);
+			//socketChannel.register(selector, SelectionKey.OP_CONNECT|SelectionKey.OP_READ);
 			socketChannel.register(selector, SelectionKey.OP_CONNECT);
 		}
 	}
